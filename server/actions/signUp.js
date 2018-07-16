@@ -7,7 +7,6 @@ const createUser = (email, password) => {
 			password: password
 		})
 		.catch(error => {
-			// console.log("error = ", error)
 			throw error;
 		});
 };

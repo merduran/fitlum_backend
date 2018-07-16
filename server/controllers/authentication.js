@@ -10,7 +10,6 @@ const tokenForUser = (user) => {
 
 const signIn = (req, res, next) => {
 	var token = tokenForUser(req.user);
-	console.log("signing in, token = ", token)
 	res.send({ token: token });
 };
 
@@ -28,7 +27,6 @@ const signUp = (req, res, next) => {
 					res.json({ token: tokenForUser(newUser) })
 				})
 				.catch((err) => {
-					// throw err;
 					res.json({ error: 'Database error!'})
 				})
 		})
