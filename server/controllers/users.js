@@ -1,21 +1,32 @@
-const User = require('../models').User;
-console.log("user table = ", User)
+const User = require('../models').UserAlternative;
 module.exports = {
-  	create(req, res) {
-  	console.log("req.body = ", req.body);
+  	createUser(req, res) {
 	    return User
 	    .create({
 	      	email: req.body.email,
 	     	password: req.body.password
 	    })
-	    .then(user => console.log("user = ", user))
-	    .catch(error => console.log("ANGRY = ", error));
+	    .then(user => res.status(201).send(user))
+	    .catch(error => res.status(400).send(error));
     },
-	list(req, res){
+	listAllUsers(req, res){
 		return User
+		// sync()
+		// .destroy({
+		// 	truncate: true,
+		// 	where: {}
+		// })
+		// .then(users => res.status(201).send(users))
+		// .catch(error => res.status(400).send(error))
 		.all()
-		.then(todos => res.status(201).send(todos))
+		.then(users => res.status(201).send(users))
 		.catch(error => res.status(400).send(error))
+
+	},
+	findUserById(req, res){
+		return User
+		.findOne({where: {id: 'req.'}})
 	}
+
 
 };

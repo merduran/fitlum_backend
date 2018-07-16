@@ -1,7 +1,14 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Users', {
+    // return queryInterface.createTable('Users', 
+
+    // return queryInterface.changeColumn('Users', 'email', {
+    //   allowNull: false,
+    //   unique: true,
+    //   type: Sequelize.STRING
+    // });
+    {
       id: {
         allowNull: false,
         autoIncrement: true,
