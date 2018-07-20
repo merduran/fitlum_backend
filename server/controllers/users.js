@@ -20,7 +20,7 @@ module.exports = {
 		// .catch(error => res.status(400).send(error))
 		.all()
 		.then(users => res.status(201).send(users))
-		.catch(error => res.status(400).send(error))
+		.catch(error => console.log(error))
 
 	},
 	findUserById(req, res){

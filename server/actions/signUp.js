@@ -1,10 +1,10 @@
 const Users = require('../models').UserAlternative;
-const createUser = (email, password) => {
-	console.log("Creating User")
+const createUser = (email, hash) => {
+	// console.log("creating user biatch")
 	return Users
 		.create({
 			email: email,
-			password: password
+			hash: hash
 		})
 		.catch(error => {
 			throw error;
