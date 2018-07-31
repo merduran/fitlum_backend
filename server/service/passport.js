@@ -47,7 +47,7 @@ const jwtOptions = {
 // opts.secretOrKey = 'secret';
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
-	console.log('payload = ', payload.sub)
+	// console.log('payload = ', payload, Dat
 	return findUserById(payload.sub)
 		.then((foundUser) => {
 			if (foundUser) {

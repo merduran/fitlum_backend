@@ -2,21 +2,19 @@ const jwt = require('jwt-simple');
 const config = require('../../config');
 const { createUser } = require('../actions/signUp.js');
 const bcrypt = require('bcrypt');
+const moment = require('moment');
 
 const tokenForUser = (user) => {
-	const timestamp = new Date().getTime() - 4 * 60 * 60 * 1000;
-	const exp = new Date().getTime() + - 4 * 59 * 60 * 1000
-	console.log("timestamp = ", new Date(timestamp), ", exp = ", new Date(exp));
-	return jwt.encode({ sub: user.id, iat: timestamp, exp: exp }, config.secret);
+	const timestamp = moment().valueOf() / 1000;
+	const expires = moment().add(120, 'seconds').valueOf() / 1000;
+	return jwt.encode({ exp: expires, sub: user.id, iat: timestamp }, config.secret);
 };
 
 const signIn = (req, res, next) => {
-	// console.log("SIGNING IN BIACTH = ");
 	res.send({ token: tokenForUser(req.user) });
 };
 
 const signUp = (req, res, next) => {
-	// console.log("SIGNING UP BIACTH");
 	const { email, password } = req.body;
 	const saltRounds = 12
 	if (!email || !password){
