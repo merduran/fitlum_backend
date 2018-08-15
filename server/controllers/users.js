@@ -1,4 +1,5 @@
 const User = require('../models').UserAlternative;
+const TempUser = require('../models').TempUser;
 module.exports = {
   	createUser(req, res) {
 	    return User
@@ -10,7 +11,7 @@ module.exports = {
 	    .catch(error => res.status(400).send(error));
     },
 	listAllUsers(req, res){
-		return User
+		return TempUser
 		// sync()
 		// .destroy({
 		// 	truncate: true,
@@ -23,10 +24,11 @@ module.exports = {
 		.catch(error => console.log(error))
 
 	},
-	findUserById(req, res){
-		return User
-		.findOne({where: {id: 'req.'}})
-	}
+	// findUserById(req, res){
+	// 	console.log("req = ", req)
+	// 	return User
+	// 	.findOne({where: {id: 'req.'}})
+	// }
 
 
 };

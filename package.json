@@ -9,7 +9,9 @@
     "express": "^4.16.3",
     "jwt-simple": "^0.5.1",
     "moment": "^2.22.2",
+    "mongoose": "^5.2.7",
     "morgan": "^1.9.0",
+    "nodemailer": "^4.6.7",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
@@ -17,7 +19,8 @@
     "pg-hstore": "^2.3.2",
     "pg-promise": "^8.4.5",
     "sequelize": "^4.38.0",
-    "sequelize-cli": "^4.0.0"
+    "sequelize-cli": "^4.0.0",
+    "speakeasy": "^2.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.2"

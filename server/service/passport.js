@@ -41,13 +41,10 @@ const jwtOptions = {
 	jwtFromRequest: ExtractJwt.fromHeader('authorization'),
 	secretOrKey: config.secret,
 };
-// console.log("jwtOptions = ", jwtOptions.jwtFromRequest);
-// var opts = {}
-// opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-// opts.secretOrKey = 'secret';
+
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
-	// console.log('payload = ', payload, Dat
+	console.log('payload = ', payload);
 	return findUserById(payload.sub)
 		.then((foundUser) => {
 			if (foundUser) {
@@ -58,6 +55,9 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
 		})
 		.catch(err => done(err, false))
 });
+
+
+// const totpLogin
 
 passport.use(jwtLogin);
 passport.use(localLogin);

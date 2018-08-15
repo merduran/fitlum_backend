@@ -1,7 +1,6 @@
 const Users = require('../models').UserAlternative;
 
 const findUserById = (id) => {
-	// console.log("FIndig ID = ", id)
 	return Users
 		.findOne({where: {id: id}})
 		.catch(error => {
