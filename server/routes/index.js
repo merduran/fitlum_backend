@@ -14,5 +14,6 @@ module.exports = (app) => {
 	app.post('/api/sign_in', requireSignIn, authenticationController.signIn);
 	app.get('/api/get_users', requireAuth, usersController.listAllUsers);
 	app.post('/api/sign_up', authenticationController.signUpTempUser);
+	// app.post('/api/sign_up', authenticationController.signUpPermanentUser);
 	app.post('/api/totp_verify', authenticationController.signUpPermanentUser)
 }

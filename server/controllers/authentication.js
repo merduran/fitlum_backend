@@ -32,13 +32,19 @@ const signUpTempUser = (req, res, next) => {
 				bcrypt.hash(password, saltRounds)
 					.then((hash) => {
 						var totpKey = speakeasy.generateSecret({ length: 20 });
+						var timer = 0;
+						setInterval(function(){ 
+							timer += 1;
+							console.log("time since totp generation = ", timer);
+						}, 1000);
 						// console.log("totpKey = ", totpKey, ", hash = ", hash);
 						createTempUser(email, hash, totpKey.base32)
 							.then((newTempUser) => {
 								// console.log("secret = ", newTempUser.totpKey);
 								var totpToken = speakeasy.totp({
-								  secret: newTempUser.totpKey.base32,
+								  secret: newTempUser.totpKey,
 								  encoding: 'base32'
+								  // time: 20
 								});
 								// console.log("totp token = ", totpToken)
 								sendVerificationMail(req, res, newTempUser.email, totpToken)
@@ -55,45 +61,28 @@ const signUpTempUser = (req, res, next) => {
 		});
 };
 
-const signUpPermanentUser = (req, res, next) => {
-	// console.log("req.body = ", req.body);
+const signUpPermanentUser = (req, res, next) => {	
 	findTempUser(req.body.email)
 		.then((tempUser) => {
-			// console.log("tempUser = ", tempUser)
 			var tokenValidates = speakeasy.totp.verify({
 				secret: tempUser.totpKey,
 				encoding: 'base32',
 				token: req.body.totpCode,
-				// window: 6
+				window: 1
 			});
-			var totpToken = speakeasy.totp({
-				secret: tempUser.totpKey,
-				encoding: 'base32'
-			});
-			console.log("tempUser.totpKey = ", tempUser.totpKey);
-			console.log("totpToken = ", totpToken);
-			console.log("tokenValidates = ", tokenValidates);
-			// return createPermanentUser(tempUser.email, tempUser.hash, tempUser.totpKey)
-			// 	.then((newUser) => {
-			// 		var token = tokenForUser(newUser);
-			// 		console.log("token assigned = ", token)
-			// 		res.json({ token: token });
-			// 	})					
-			// 	.catch((err) => {
-			// 		res.json({ error: 'db error: most likely email already in use!'})
-			// 	})
+			if (tokenValidates){
+				createPermanentUser(tempUser.email, tempUser.hash, tempUser.totpKey)
+				.then((newUser) => {
+					res.json({ token: tokenForUser(newUser) });
+				})
+				.catch((err) => {
+					res.json({ error: 'db error: most likely email already in use!'})
+				});
+			} else {
+				res.json({ error: 'totp error: wrong or expired totp token, try again!' })
+			}				
 		});
 }
-
-// const verifyTotpToken = (req, res) => {
-
-// 	var tokenValidates = speakeasy.totp.verify({
-// 	  secret: secret.base32,
-// 	  encoding: 'base32',
-// 	  token: '123456',
-// 	  window: 6
-// 	});
-// }
 
 const sendVerificationMail = (req, res, email, totpToken) => {
     var smtpTransport = nodemailer.createTransport({
