@@ -17,6 +17,64 @@ const signIn = (req, res, next) => {
 };
 
 const signUpTempUser = (req, res, next) => {
+	// var totpKey = speakeasy.generateSecret({ length: 20 });
+	// var totpToken1 = speakeasy.totp({
+	// 	secret: totpKey.base32,
+	// 	encoding: 'base32',
+	// 	step: 10,
+	// 	time: time
+	// });
+
+	// var timer = 0;
+	// // var totpToken2;
+	// var validates;
+	// setInterval(function(){ 
+	// 	// var timeY = Date.now() / 1000 + 10;
+	// 	// console.log("time = ", time, ", timeY = ", timeY)
+	// 	timer += 1;
+	// 	// if (timer == 10){
+	// 		// var time2 = Date.now() / 1000;
+	// 		// console.log("time = ", time, ", time2 -  time = ", time2 -  time);
+	// 		// totpToken2 = speakeasy.totp({
+	// 		// 	secret: totpKey.base32,
+	// 		// 	encoding: 'base32',
+	// 		// 	time: time,
+	// 		// 	step: 1
+	// 		// 							  // time: 20
+	// 		// });
+	// 				validates = speakeasy.totp.verify({
+	// 					secret: totpKey.base32,
+	// 					encoding: 'base32',
+	// 					token: totpToken1,
+	// 					window: 3,
+	// 				});
+	// 				if (validates){
+	// 					console.log("at ", timer, "seconds, totpToken1 = ", totpToken1, ", totpToken1 validates = ", validates)
+	// 				}
+
+	// 	// }
+	// 	// console.log("timer = ", timer)
+	// 	// validates = speakeasy.totp.verify({
+	// 	// 		secret: totpKey.base32,
+	// 	// 		encoding: 'base32',
+	// 	// 		token: totpToken1,
+	// 	// 	});
+	// 	// console.log("at ", timer, "seconds, totpToken1 = ", totpToken1, ", totpToken1 validates = ", validates)
+
+	// 	// if (totpToken2) {
+	// 	// 	validates = speakeasy.totp.verify({
+	// 	// 		secret: totpKey.base32,
+	// 	// 		encoding: 'base32',
+	// 	// 		token: totpToken1,
+	// 	// 	});
+	// 	// 	// console.log("at ", timer, "seconds, totpToken1 = ", totpToken1, ", totpToken2 = ", totpToken2)
+	// 	// 	console.log("at ", timer, "seconds, totpToken1 = ", totpToken1, ", totpToken1 validates = ", validates)
+
+	// 	// }
+	// 	// console.log("time since totp generation = ", timer);
+	// }, 1000);
+
+
 	const { email, password } = req.body;
 	if (!email || !password) {
 		res.status(442).send({ error: 'You must provide an email and a password.' });
@@ -46,9 +104,9 @@ const signUpTempUser = (req, res, next) => {
 								  encoding: 'base32'
 								  // time: 20
 								});
-								// console.log("totp token = ", totpToken)
+								console.log("totp token = ", totpToken)
 								sendVerificationMail(req, res, newTempUser.email, totpToken)
-								res.json({ token: tokenForUser(newTempUser) })
+								res.json({ error: false })
 							})
 							.catch((err) => {
 								res.json({ error: 'db error: most likely email already in use!'})
@@ -60,6 +118,7 @@ const signUpTempUser = (req, res, next) => {
 			}
 		});
 };
+
 
 const signUpPermanentUser = (req, res, next) => {	
 	findTempUser(req.body.email)
