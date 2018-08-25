@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    // return queryInterface.createTable('Users', 
+    return queryInterface.createTable('Users', 
 
     // return queryInterface.changeColumn('Users', 'email', {
     //   allowNull: false,
@@ -29,8 +29,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
-  },
+    }
+  )},
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Users');
   }
