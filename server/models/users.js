@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     age: DataTypes.INTEGER,
     sex: DataTypes.STRING
   }, {});
-  Users.associate = function(models) {
+  Users.associate = (models) => {
     // associations can be defined here
     Users.belongsToMany(models.Classes, {
       foreignKey: 'classId',

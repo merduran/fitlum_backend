@@ -21,6 +21,15 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      gymId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Gyms',
+          key: 'id',
+          as: 'gymId'
+        }
       }
     }),
   down: (queryInterface) =>

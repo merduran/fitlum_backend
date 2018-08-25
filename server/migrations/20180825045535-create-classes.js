@@ -20,9 +20,9 @@ module.exports = {
       endTime: {
         type: Sequelize.DATE
       },
-      instructor: {
-        type: Sequelize.STRING
-      },
+      // instructor: {
+      //   type: Sequelize.STRING
+      // },
       spotsAvailable: {
         type: Sequelize.INTEGER
       },
@@ -39,6 +39,24 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      gymId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Gyms',
+          key: 'id',
+          as: 'gymId'
+        }
+      },
+      instructorId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Instructors',
+          key: 'id',
+          as: 'instructorId'
+        }
       }
     }),
   down: (queryInterface/*, Sequelize*/) => 

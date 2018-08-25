@@ -1,27 +1,27 @@
 'use strict';
 module.exports = {
-  up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Areas', {
+  up: (queryInterface, Sequelize) => 
+  queryInterface.createTable('Instructors', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      areaName: {
+      instructorName: {
         type: Sequelize.STRING
       },
-      description: {
+      email: {
         type: Sequelize.STRING
       },
-      numberOfPeople: {
-        type: Sequelize.INTEGER
-      },
-      equipments: {
+      phone: {
         type: Sequelize.STRING
       },
-      capacity: {
-        type: Sequelize.INTEGER
+      specialty: {
+        type: Sequelize.STRING
+      },
+      rating: {
+        type: Sequelize.DOUBLE
       },
       createdAt: {
         allowNull: false,
@@ -31,16 +31,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      facilityId: {
+      gymId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
-          model: 'Facilities',
+          model: 'Gyms',
           key: 'id',
-          as: 'facilityId'
+          as: 'gymId'
         }
       }
     }),
-  down: (queryInterface) =>
-    queryInterface.dropTable('Areas'),
+  down: (queryInterface) => 
+     queryInterface.dropTable('Instructors'),
 };

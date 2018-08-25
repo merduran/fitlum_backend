@@ -10,10 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.FLOAT,
     keywords: DataTypes.STRING
   }, {});
-  Classes.associate = function(models) {
+  Classes.associate = (models) => {
     // associations can be defined here
     Classes.belongsTo(models.Gyms, {
       foreignKey: 'gymId',
+      onDelete: 'CASCADE',
+    }),
+    Classes.belongsTo(models.Instructors, {
+      foreignKey: 'instructorId',
       onDelete: 'CASCADE',
     }),
     Classes.hasMany(models.Users, {

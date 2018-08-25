@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     phoneNumber: DataTypes.STRING,
     email: DataTypes.STRING
   }, {});
-  Gyms.associate = function(models) {
+  Gyms.associate = (models) => {
     // associations can be defined here
     Gyms.hasMany(models.Classes, {
       foreignKey: 'classId',
@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     Gyms.hasMany(models.Users, {
       foreignKey: 'userId',
       as: 'members'
+    }),
+    Gyms.hasMany(models.Instructors, {
+      foreignKey: 'instructorId',
+      as: 'instructors'
     }),
   };
   return Gyms;
