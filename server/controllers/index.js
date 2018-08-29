@@ -3,5 +3,9 @@ const authentication = require('./authentication.js');
 
 module.exports = {
 	users,
-	authentication
+	authentication,
+	clasees,
+	facilities,
+	gyms,
+	instructors
 };
